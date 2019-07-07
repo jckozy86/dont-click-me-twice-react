@@ -10,8 +10,8 @@ function App() {
     <Router>
       <>
         <Nav />
-        <Route exact path='/' component={Home} />
-        <Route exact path='/About' component={About} />
+        <Route exact path='/dont-click-me-twice-react' component={Home} />
+        <Route exact path='/dont-click-me-twice-react/About' component={About} />
       </>
     </Router>
   );
