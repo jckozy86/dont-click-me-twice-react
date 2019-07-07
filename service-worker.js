@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/dont-click-me-twice-react/precache-manifest.d9f7308a283dc03e7d1cf468ab4609a1.js"
+  "/dont-click-me-twice-react/precache-manifest.289f51d3fcabd416feee53aeeb78926e.js"
 );
 
 self.addEventListener('message', (event) => {
