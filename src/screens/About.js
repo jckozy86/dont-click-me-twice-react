@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios';
-import { Card, Button, Col, Container, Row } from 'react-bootstrap';
+import { Container, Row } from 'react-bootstrap';
 
 class About extends Component {
 
@@ -8,8 +7,10 @@ class About extends Component {
         return(
             <Container>
                 <Row>
-                    <h1> About Us </h1>
-                    <p> typing for the sake of typing</p>
+                    <h1> About the game </h1>
+                    <p> Click the pics only once</p>
+                    <p> You win if you click all gifs</p>
+                    <p> Game resets if you click a gif twice</p>
                 </Row>
             </Container>
         )

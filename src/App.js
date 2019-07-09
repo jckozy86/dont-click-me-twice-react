@@ -9,9 +9,10 @@ function App() {
   return (
     <Router>
       <>
-        <Nav />
-        <Route exact path='/dont-click-me-twice-react' component={Home} />
-        <Route exact path='/dont-click-me-twice-react/About' component={About} />
+        <Nav key="3" />
+        <Route key="0" exact path='/' component={Home} />
+        <Route key="1" exact path='/dont-click-me-twice-react' component={Home} />
+        <Route key="2" exact path='/dont-click-me-twice-react/About' component={About} />
       </>
     </Router>
   );

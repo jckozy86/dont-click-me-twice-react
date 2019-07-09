@@ -1,6 +1,20 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Card, Button, Col, Container, Row } from 'react-bootstrap';
+import Modal from 'react-modal';
+
+
+const customStyles = {
+    content: {
+        top: '50%',
+        left: '50%',
+        right: 'auto',
+        bottom: 'auto',
+        marginRight: '-50%',
+        transform: 'translate(-50%, -50%)'
+    }
+};
+
 
 class Home extends Component {
     constructor(props) {
@@ -8,7 +22,10 @@ class Home extends Component {
 
         this.state = {
             search: '',
+            score: 0,
             results: [],
+            clicked: [],
+            showModal: false,
         }
     }
 
@@ -35,41 +52,80 @@ class Home extends Component {
                 this.setState({
                     results: pics,
                 })
-                console.log(this.state.results);
             })
     }
 
     gifyClicked = event => {
-        console.log("Clicked image");
-        console.log(event.target);
+        
+        const { clicked, results, score } = this.state;
 
-        const { results } = this.state;
+        if (clicked.includes(event.target.id) && score < 12) {
+            //window.alert("Pic has been clicked before... Game resetting", 'error');
 
-        let newPics = this.shuffle(results);
+            this.setState({
+                results: this.shuffle(results),
+                score: 0,
+                clicked: [],
+                showModal: true,
+                won: false,
+            })
+        } else if( score === 11 ) {
+            this.setState({
+                score: 0,
+                clicked: [],
+                showModal: true,
+                won: true,
+            })
+        } else {
 
-        this.setState({
-            results: newPics,
-        })
+            let newClicked = clicked.splice(0);
+            newClicked.push(event.target.id);
+
+            let newResults = this.shuffle(results);
+
+            this.setState({
+                results: newResults,
+                score: score + 1,
+                clicked: newClicked,
+                won: false,
+            })
+        }
 
     }
 
-    renderImages() {
+    renderImages = () => {
 
-        const { results } = this.state;
+        const { results, showModal, won } = this.state;
 
         return (results.map((result) => {
             //console.log(result.id)
             return (
-                <Col xs={12} sm={6} md={4}>
-                    <Card tag="a" onClick={this.gifyClicked} id={result.id} key={result.id} clicked="false" style={{ width: '18rem', cursor: "pointer" }}>
-                        <Card.Img key={result.id} id={result.id} variant="top" src={result.url} />
-                    </Card>
-                </Col>
+                <>
+                    <Modal
+                        isOpen={showModal}
+                        // onAfterOpen={this.afterOpenModal}
+                        // onRequestClose={this.handleCloseModal}
+                        style={customStyles}
+                        contentLabel="Game Announcement Modal"
+                        ariaHideApp={false}
+                        key="Modal"
+                    >
+
+                        <h2 ref={subtitle => this.subtitle = subtitle}>Game Announcement:</h2>
+                        <Button onClick={this.handleCloseModal}>close</Button>
+                        <div>{(won) ? "You Won!" : "You clicked a gif twice... Game resetting"}</div>
+                    </Modal>
+                    <Col id={"column-" + result.id} key={"column-" + result.id} xs={12} sm={6} md={4}>
+                        <Card tag="a" onClick={this.gifyClicked} id={"card" + result.id} key={"card" + result.id} clicked="false" style={{ width: '18rem', cursor: "pointer" }}>
+                            <Card.Img key={result.id} id={result.id} variant="top" src={result.url} />
+                        </Card>
+                    </Col>
+                </>
             )
         }))
     }
 
-    shuffle(array) {
+    shuffle = (array) => {
 
         let newArray = array.slice(0);
 
@@ -91,21 +147,30 @@ class Home extends Component {
         return newArray;
     }
 
+    handleOpenModal = () => {
+        this.setState({ showModal: true });
+    }
 
+    handleCloseModal = () => {
+        this.setState({ showModal: false });
+    }
 
 
     render() {
 
-        //const { results } = this.state;
+        const { results, score } = this.state;
 
-        if (this.state && this.state.results != null && this.state.results.length > 0) {
+        if (results != null && results.length > 0) {
 
             return (
-                <Container>
-                    <Row>
-                        {this.renderImages()}
-                    </Row>
-                </Container>
+                <>
+                    <h1>Score: {score}</h1>
+                    <Container>
+                        <Row>
+                            {this.renderImages()}
+                        </Row>
+                    </Container>
+                </>
             )
         } else {
             return null;

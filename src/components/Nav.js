@@ -5,9 +5,9 @@ class Nav extends Component {
     render() {
         return (
             <>
-                <Link to='/dont-click-me-twice-react'>Home</Link>
+                <Link to='/dont-click-me-twice-react'>Game</Link>
                 <br />
-                <Link to='/dont-click-me-twice-react/About'>About</Link>
+                <Link to='/dont-click-me-twice-react/About'>Instructions</Link>
             </>
         )
     }
