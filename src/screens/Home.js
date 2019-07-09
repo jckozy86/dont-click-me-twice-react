@@ -35,7 +35,7 @@ class Home extends Component {
 
 
     getGifs() {
-        axios.get('https://api.giphy.com/v1/gifs/trending?api_key=BkaUZZWcFij6J7AoQj3WtPb1R2p9O6V9')
+        axios.get('https://api.giphy.com/v1/gifs/search?q=disney+mulan+mushu+cartoon&api_key=BkaUZZWcFij6J7AoQj3WtPb1R2p9O6V9')
             .then((response) => {
 
                 let pics = [];
